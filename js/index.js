@@ -9,7 +9,9 @@ require(['zepto', 'page', 'part'], function($, Page, Part) {
 
         switch (type) {
             case 'addPage':
-                curPage = new Page.Page().render();
+                curPage = new Page.Page().render({
+                    container: $('.W_wx_pageWarp')
+                });
                 break;
             case 'addImg':
                 new Part.Part({

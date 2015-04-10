@@ -1,12 +1,10 @@
-(function(win, udf) {
+define(['zepto'], function($) {
 
-    'use strict';
+    var noop = function() {};
 
-    var $ = win.$,
-        doc = win.document,
+    var doc = document,
         $doc = $(doc),
         $body = $(doc.body),
-        datakey = 'jquery-drag',
         defaults = {
             // 鼠标操作区域选择器，默认为this
             // 参数为选择器字符串
@@ -17,17 +15,8 @@
             // 参数为选择器字符串
             drag: null,
 
-            // 拖拽轴向，x：水平，y：垂直，xy：所有
-            axis: 'xy',
-
             // 鼠标形状，为空时将不会自动设置
             cursor: 'move',
-
-            // 拖拽对象的最小位置，格式为{left: 10, top: 10}
-            min: null,
-
-            // 拖拽对象的最大位置，格式为{left: 1000, top: 1000}
-            max: null,
 
             // 拖拽时的层级值
             zIndex: 9999,
@@ -36,73 +25,35 @@
             // this: drag element
             // arg0: event
             // arg1: instance
-            ondragbefore: $.noop,
+            ondragbefore: noop,
 
- 
+
             // 拖拽开始后回调
             // this: drag element
             // arg0: event
             // arg1: instance
-            ondragstart: $.noop,
+            ondragstart: noop,
 
             // 拖拽中回调
             // this: drag element
             // arg0: event
             // arg1: instance
-            ondrag: $.noop,
+            ondrag: noop,
 
             // 拖拽结束后回调
             // this: drag element
             // arg0: event
             // arg1: instance
-            ondragend: $.noop
+            ondragend: noop
         };
 
     $.fn.drag = function(settings) {
-        // 当前第1个参数为字符串
-        var run = $.type(settings) === 'string',
-            // 获取运行方法时的其他参数
-            args = [].slice.call(arguments, 1),
-            // 复制默认配置
-            options = $.extend({}, defaults),
-            // 运行实例化方法的元素
-            $element,
-            // 实例化对象
-            instance;
-
-        // 运行实例化方法，第1个字符不能是“_”
-        // 下划线开始的方法皆为私有方法
-        if (run && run[0] !== '_') {
-            if (!this.length) return;
-
-            // 只取集合中的第1个元素
-            $element = $(this[0]);
-
-            // 获取保存的实例化对象
-            instance = $element.data(datakey);
-
-            // 若未保存实例化对象，则先保存实例化对象
-            if (!instance) $element.data(datakey, instance = new Constructor($element[0], options)._init());
-
-            // 防止与静态方法重合，只运行原型上的方法
-            // 返回原型方法结果，否则返回undefined
-            return Constructor.prototype[settings] ? Constructor.prototype[settings].apply(instance, args) : udf;
-        }
-        // instantiation options
-        else if (!run) {
-            // 合并参数
-            options = $.extend(options, settings);
-        }
+        // 复制默认配置
+        var options = $.extend({}, defaults, settings);
 
         return this.each(function() {
-            var element = this,
-                instance = $(element).data(datakey);
-
-            // 如果没有保存实例
-            if (!instance) {
-                // 保存实例
-                $(element).data(datakey, instance = new Constructor(element, options)._init());
-            }
+            var element = this;
+            new Constructor(element, options)._init();
         });
     };
     $.fn.drag.defaults = defaults;
@@ -121,26 +72,26 @@
          * 2014年7月3日18:29:40
          */
         _init: function() {
-            var the = this,
-                options = the.options,
-                $element = $(the.element);
+            var that = this,
+                options = that.options,
+                $element = $(that.element);
 
-            the.$element = $element;
+            that.$element = $element;
 
             // 采用事件代理
             if (options.handle) {
-                $element.on('mousedown taphold', options.handle, $.proxy(the._start, the));
+                $element.on('mousedown taphold', options.handle, $.proxy(that._start, that));
             } else {
-                $element.on('mousedown taphold', $.proxy(the._start, the));
+                $element.on('mousedown taphold', $.proxy(that._start, that));
             }
 
-            $doc.mousemove($.proxy(the._move, the))
-                .mouseup($.proxy(the._end, the))
-                .bind('touchmove', $.proxy(the._move, the))
-                .bind('touchend', $.proxy(the._end, the))
-                .bind('touchcancel', $.proxy(the._end, the));
+            $doc.mousemove($.proxy(that._move, that))
+                .mouseup($.proxy(that._end, that))
+                .bind('touchmove', $.proxy(that._move, that))
+                .bind('touchend', $.proxy(that._end, that))
+                .bind('touchcancel', $.proxy(that._end, that));
 
-            return the;
+            return that;
         },
 
 
@@ -154,12 +105,11 @@
          */
         _start: function(e) {
             if (!this.is) {
-                e = e.originalEvent;
                 e.preventDefault();
-                
-                var the = this,
-                    options = the.options,
-                    $element = the.$element,
+
+                var that = this,
+                    options = that.options,
+                    $element = that.$element,
                     $handle = options.handle ? $(e.target).closest(options.handle) : $(e.target),
                     $drag = options.drag ? $handle.closest(options.drag) : $element,
                     cssPos,
@@ -168,14 +118,14 @@
 
                 if (!$element.has($drag).length) $drag = $element;
 
-                the.$drag = $drag;
-                options.ondragbefore.call($drag[0], e, the);
+                that.$drag = $drag;
+                options.ondragbefore.call($drag[0], e, that);
 
-                the.zIndex = $drag.css('z-index');
-                the.cursor = $body.css('cursor');
-                the.$drag = $drag.css('z-index', options.zIndex);
+                that.zIndex = $drag.css('z-index');
+                that.cursor = $body.css('cursor');
+                that.$drag = $drag.css('z-index', options.zIndex);
                 cssPos = $drag.css('position');
-                offset = $drag.offset();
+                offset = $drag.position();
 
                 if (cssPos === 'static') {
                     $drag.css('position', 'relative');
@@ -186,16 +136,16 @@
                 }
 
 
-                the.pos = {
+                that.pos = {
                     x: te.pageX,
                     y: te.pageY,
                     l: offset.left,
                     t: offset.top
                 };
-                the.is = !0;
-                if (the.options.cursor) $body.css('cursor', options.cursor);
+                that.is = !0;
+                if (that.options.cursor) $body.css('cursor', options.cursor);
 
-                options.ondragstart.call($drag[0], e, the);
+                options.ondragstart.call($drag[0], e, that);
             }
         },
 
@@ -211,43 +161,25 @@
          */
         _move: function(e) {
             if (this.is) {
-                e = e.originalEvent;
                 e.preventDefault();
 
-                var the = this,
-                    options = the.options,
-                    min = options.min,
-                    max = options.max,
-                    pos = the.pos,
-                    $drag = the.$drag,
+                var that = this,
+                    options = that.options,
+                    pos = that.pos,
+                    $drag = that.$drag,
                     offset = $drag.parent(!0).offset(),
-                    minLeft, minTop, maxLeft, maxTop,
                     to = {},
                     te = e.touches ? e.touches[0] : e;
 
 
-                // axis
-                if (~options.axis.indexOf('x')) to.left = te.pageX - pos.x + pos.l;
-                if (~options.axis.indexOf('y')) to.top = te.pageY - pos.y + pos.t;
+                console.log(te.pageX , pos.x , pos.l);
+                to.left = te.pageX - pos.x + pos.l;
+                to.top = te.pageY - pos.y + pos.t;
 
-                // min
-                if (min && min.left !== udf) {
-                    if (to.left < (minLeft = min.left + offset.left)) to.left = minLeft;
-                }
-                if (min && min.top !== udf) {
-                    if (to.top < (minTop = min.top + offset.top)) to.top = minTop;
-                }
-
-                // max
-                if (max && max.left !== udf) {
-                    if (to.left > (maxLeft = max.left + offset.left)) to.left = maxLeft;
-                }
-                if (max && max.top !== udf && to.top > max.top) {
-                    if (to.top > (maxTop = max.top + offset.top)) to.top = maxTop;
-                }
+               
 
                 $drag.offset(to);
-                options.ondrag.call($drag[0], e, the);
+                options.ondrag.call($drag[0], e, that);
             }
         },
 
@@ -262,36 +194,19 @@
          */
         _end: function(e) {
             if (this.is) {
-                var the = this,
-                    $drag = the.$drag;
+                var that = this,
+                    $drag = that.$drag;
 
                 e.preventDefault();
-                the.is = !1;
-                if (the.options.cursor) $body.css('cursor', the.cursor);
-                $drag.css('z-index', the.zIndex);
-                the.options.ondragend.call($drag[0], e, the);
+                that.is = !1;
+                if (that.options.cursor) $body.css('cursor', that.cursor);
+                $drag.css('z-index', that.zIndex);
+                that.options.ondragend.call($drag[0], e, that);
             }
-        },
-
-
-
-        /**
-         * 设置或获取选项
-         * @param  {String/Object} key 键或键值对
-         * @param  {*}             val 值
-         * @return 获取时返回键值，否则返回this
-         * @version 1.0
-         * 2014年7月3日20:08:16
-         */
-        options: function(key, val) {
-            // get
-            if ($.type(key) === 'string' && val === udf) return this.options[key];
-
-            var map = {};
-            if ($.type(key) === 'object') map = key;
-            else map[key] = val;
-
-            this.options = $.extend(this.options, map);
         }
+
+       
     };
-})(this);
+
+
+});

@@ -1,4 +1,4 @@
-define(['FFF'], function(FFF) {
+define(['FFF','drag'], function(FFF) {
     var F = FFF.FFF,
         Widget = F.Widget;
 
@@ -8,7 +8,7 @@ define(['FFF'], function(FFF) {
 
     Part.ATTRS = {
         boundingBox: {
-            value: $('<div class="W_Part"></div>')
+            value: $('<div class="W_wx_Part"></div>')
         },
         type: {
             value: 'text'
@@ -55,7 +55,8 @@ define(['FFF'], function(FFF) {
         },
         bindUI: function() {
             var that = this;
-
+            var $boundingBox = that.getBoundingBox();
+            $boundingBox.drag();
 
         }
     });
