@@ -4,6 +4,7 @@
 # 目录结构
 
 - css/
+- less/(开发使用less，生成到根目录css目录下)
 - img/
 - js/
     - appPart/(独立模块，以app名字开头，各app模块内容近似)
