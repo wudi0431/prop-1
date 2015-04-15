@@ -1,6 +1,8 @@
-<div class="W_wx_control">
-    <button type="button" data-controltype="addPage">新增页面</button>
-    <button type="button" data-controltype="addImg">新增图片</button>
-    <button type="button" data-controltype="addText">新增文字</button>
+<div class="wx_admin" ng-controller="AdminController">
+    <button type="button" ng-click="addPage($event)">新增页面</button>
+    <button type="button" ng-click="addImg($event)">新增图片</button>
+    <button type="button" ng-click="addText($event)">新增文字</button>
+    <button type="button" ng-click="addBtn($event)">新增按钮</button>
+    <button type="button" ng-click="save($event)">保存</button>
+    <button type="button" ng-click="addPreview($event)">预览</button>
 </div>
-<div class="W_wx_pageWarp"></div>
