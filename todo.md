@@ -1,0 +1,5 @@
+- jquery
+- angular
+- angular-resource
+- textAngular
+- angular-file-upload

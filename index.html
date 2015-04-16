@@ -2,16 +2,19 @@
 <html>
     <head lang="zh">
         <title>微信传播工具</title>
+        <link rel="stylesheet" type="text/css" href="css/base.css">
         <link rel="stylesheet" type="text/css" href="css/wx.css">
     </head>
-    <body>
-        <header class="prop_header"></header>
-        <div class="prop_main">
-            <section class="prop_preview"></section>
-            <section class="prop_operater"></section>
-            <section class="prop_config"></section>
+    <body ng-cloak>
+        <div class="wx_head" ng-include src="'admin.html'">
         </div>
-        <script src="lib/lib/require.js" data-main="js/index"></script>
-        <script src="lib/yhd_mxc.js"></script>
+        <div class="wx_content">
+            <div class="wx_pages"></div>
+            <div class="wx_factory"></div>
+            <div class="wx_decorator"></div>
+        </div>
+        <script src="lib/require.js"></script>
+        <script src="js/common/config.js"></script>
+        <script src="js/appAdmin/admin_main.js"></script>
     </body>
 </html>
