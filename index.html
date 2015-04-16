@@ -9,7 +9,7 @@
         <div class="wx_head" ng-include src="'admin.html'"></div>
         <div class="wx_content" ng-controller="PageController">
             <div class="wx_pages">
-                <div class="wx_page" ng-click="selectPage($index,$event)" ng-class="{wx_page_selected: $index==selectedRow}" ng-repeat="page in pageList track by $index" ng-bind="page"></div>
+                <div class="wx_page" ng-click="selectPage($index,$event)" ng-class="{wx_page_selected: $index==selectedRow}" ng-repeat="page in pageList track by $index" ng-bind-html="page"></div>
             </div>
             <div class="wx_factory">
                 <div class="wx_pageEdit" ng-bind-html="pageSelected"></div>

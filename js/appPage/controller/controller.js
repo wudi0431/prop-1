@@ -18,13 +18,15 @@ define(['admin_app', 'angular'], function(admin_app, angular) {
 
                 $scope.pageSelected = $sce.trustAsHtml($scope.pageSelected);
 
+                $scope.pageList[$scope.selectedRow] = $scope.pageSelected;
+
 
             }, null, 'addBtn');
 
 
             $scope.selectPage = function(row, e) {
                 $scope.selectedRow = row;
-                $scope.pageSelected = $sce.trustAsHtml($scope.pageList[row]);
+                $scope.pageSelected = $scope.pageList[row];
             };
 
 
