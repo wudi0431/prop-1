@@ -6,8 +6,7 @@
         <link rel="stylesheet" type="text/css" href="css/wx.css">
     </head>
     <body ng-cloak>
-        <div class="wx_head" ng-include src="'admin.html'">
-        </div>
+        <div class="wx_head" ng-include src="'admin.html'"></div>
         <div class="wx_content">
             <div class="wx_pages" ng-controller="PageController">
                 <div class="wx_page" ng-repeat="page in pageList">{{page}}</div>
