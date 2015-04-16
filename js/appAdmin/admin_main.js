@@ -12,7 +12,8 @@ require([
         'admin_app',
         'admin_servies',
         'admin_controller',
-        'page_controller'
+        'page_controller',
+        'btn_controller'
     ],
     function(domReady,angular) {
         domReady(function() {
