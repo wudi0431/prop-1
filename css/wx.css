@@ -1,10 +1,47 @@
+
 [ng-cloak] {
     display: none;
 }
 
 .wx_page{
     display: inline-block;
-    width: 300px;
-    height: 600px;
-    border: 4px solid #333333;
+    width: 120px;
+    height: 240px;
+    border: 4px solid #20D080;
 }
+
+body,
+html {
+  height: 100%;
+}
+.wx_head {
+  height: 40px;
+  border-bottom: 1px solid #000000;
+}
+.wx_content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+}
+.wx_content > * {
+  height: 100%;
+}
+.wx_content .wx_pages {
+  width: 180px;
+  border-right: 2px solid #000000;
+  text-align: center;
+}
+.wx_content .wx_decorator {
+  width: 300px;
+  background-color: #000000;
+}
+.wx_content .wx_factory {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+}
+
