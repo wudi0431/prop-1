@@ -4,6 +4,11 @@
 @import './module/decorator.less';
 @import './module/factory.less';
 
+
+[ng-cloak] {
+    display: none;
+}
+
 body , html{
 	height: 100%;
 }
@@ -19,7 +24,8 @@ body , html{
 	}
 	.wx_pages{
 		width: 180px;
-		background-color: @black;
+		border-right: 2px solid #000000;
+  		text-align: center;
 	}
 	.wx_decorator{
 		width: 300px;
