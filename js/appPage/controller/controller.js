@@ -1,6 +1,6 @@
 define(['admin_app', 'angular'], function(admin_app, angular) {
-    admin_app.controller('PageController', ['$scope', '$sce','pubSubService',
-        function($scope,$sce, pubSubService) {
+    admin_app.controller('PageController', ['$scope', '$sce', '$compile', 'pubSubService',
+        function($scope, $sce, $compile, pubSubService) {
             $scope.pageList = [];
             $scope.pageSelected = '';
 
@@ -14,12 +14,13 @@ define(['admin_app', 'angular'], function(admin_app, angular) {
 
 
             pubSubService.subscribe(function(event, data) {
-                $scope.pageSelected = $scope.pageSelected + '<div class="wx_admin" ng-controller="AdminController">' + '<button type="button" ng-click="addPage($event)">新增页面</button>' + '</div>';
+                $scope.pageSelected = $scope.pageSelected 
+                + '<div class="wx_btn_warp" ng-controller="BtnController">' 
+                + '<button type="button">{{defaultText}}</button>' 
+                + '</div>';
 
-                $scope.pageSelected = $sce.trustAsHtml($scope.pageSelected);
 
                 $scope.pageList[$scope.selectedRow] = $scope.pageSelected;
-
 
             }, null, 'addBtn');
 
