@@ -7,11 +7,13 @@
     </head>
     <body ng-cloak>
         <div class="wx_head" ng-include src="'admin.html'"></div>
-        <div class="wx_content">
-            <div class="wx_pages" ng-controller="PageController">
-                <div class="wx_page" ng-repeat="page in pageList">{{page}}</div>
+        <div class="wx_content" ng-controller="PageController">
+            <div class="wx_pages">
+                <div class="wx_page" ng-click="selectPage($index,$event)" ng-class="{wx_page_selected: $index==selectedRow}" ng-repeat="page in pageList">{{page}}</div>
             </div>
-            <div class="wx_factory"></div>
+            <div class="wx_factory">
+                <div class="wx_pageEdit">{{pageSelected}}</div>
+            </div>
             <div class="wx_decorator"></div>
         </div>
         <script src="lib/require.js"></script>
