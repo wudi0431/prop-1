@@ -1,9 +1,10 @@
 define(['admin_app'], function(admin_app) {
-    admin_app.controller('AdminController', ['$scope', 
-        function($scope) {
+    admin_app.controller('AdminController', ['$scope', 'pubSubService',
+        function($scope,pubSubService) {
 
             $scope.addPage = function(e){
                 console.log('新增页面');
+                pubSubService.publish('addPage', {'id': new Date().getTime()});
             };
 
 

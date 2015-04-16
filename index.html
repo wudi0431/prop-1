@@ -8,9 +8,15 @@
         <div class="wx_head" ng-include src="'admin.html'">
         </div>
         <div class="wx_content">
+            <div class="wx_content_pageList"   ng-controller="PageController">
+                <div class="wx_page" ng-repeat="page in pageList">{{page}}</div>
+            </div>
+            <div class="wx_content_page"></div>
+            <div></div>
         </div>
         <script src="lib/require.js"></script>
         <script src="js/common/config.js"></script>
         <script src="js/appAdmin/admin_main.js"></script>
+        <script src="js/appPage/page_main.js"></script>
     </body>
 </html>
