@@ -14,10 +14,7 @@ define(['admin_app', 'angular'], function(admin_app, angular) {
 
 
             pubSubService.subscribe(function(event, data) {
-                $scope.pageSelected = $scope.pageSelected 
-                + '<div class="wx_btn_warp" ng-controller="BtnController">' 
-                + '<button type="button">{{defaultText}}</button>' 
-                + '</div>';
+                $scope.pageSelected = $scope.pageSelected + '<div class="wx_btn_warp" ng-controller="BtnController" ng-drag>' + '<button type="button">{{defaultText}}</button>' + '</div>';
 
 
                 $scope.pageList[$scope.selectedRow] = $scope.pageSelected;
@@ -28,6 +25,21 @@ define(['admin_app', 'angular'], function(admin_app, angular) {
             $scope.selectPage = function(row, e) {
                 $scope.selectedRow = row;
                 $scope.pageSelected = $scope.pageList[row];
+            };
+
+            $scope.dropped = function(dragEl,dropEl) {
+
+                $(dragEl).offset({
+                    top: $scope.dargPos.top,
+                    left: $scope.dargPos.left
+                });
+
+                $scope.pageSelected = angular.element(dropEl).html();
+
+                $scope.pageList[$scope.selectedRow] = $scope.pageSelected;
+
+                $scope.$apply();
+
             };
 
 

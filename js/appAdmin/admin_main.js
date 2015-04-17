@@ -3,7 +3,8 @@ require.config({
         admin_app: 'js/appAdmin/admin_app',
         admin_controller:'js/appAdmin/controller/controller',
         admin_servies:'js/appAdmin/admin_servies',
-        admin_directives:'js/appAdmin/directives/wx_html'
+        wx_html:'js/appAdmin/directives/wx_html',
+        wx_drag:'js/appAdmin/directives/wx_drag'
     }
 });
 
@@ -13,7 +14,8 @@ require([
         'admin_app',
         'admin_servies',
         'admin_controller',
-        'admin_directives',
+        'wx_html',
+        'wx_drag',
         'page_controller',
         'btn_controller'
     ],

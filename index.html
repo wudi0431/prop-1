@@ -12,7 +12,7 @@
                 <div class="wx_page" ng-click="selectPage($index,$event)" ng-class="{wx_page_selected: $index==selectedRow}" ng-repeat="page in pageList track by $index" ng-html="page"></div>
             </div>
             <div class="wx_factory">
-                <div class="wx_pageEdit" ng-html="pageSelected"></div>
+                <div class="wx_pageEdit" ng-drop-target ng-html="pageSelected"></div>
             </div>
             <div class="wx_decorator"></div>
         </div>
