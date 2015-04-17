@@ -14,6 +14,7 @@
   padding: 0;
   color: #585858;
   word-wrap: break-word;
+  font-size: 40px;
   line-height: 2;
   opacity: 0.8;
   border-style: none;
@@ -26,8 +27,8 @@
   font-style: normal;
   text-decoration: none;
   box-shadow: 0 0 16px #000;
-  border-radius: 30px;
-  font-size: 40px;
+  border-radius: 15px;
+  font-size: 20px;
 }
 .wx_pageEdit {
   display: inline-block;
