@@ -9,21 +9,25 @@ define(['admin_app', 'angular', 'jquery'], function(admin_app, angular, $) {
 
                 var pos = {
                     top: 0,
-                    left: 0
+                    left: 0,
+                    clickTop: 0,
+                    clickLeft: 0
                 };
 
                 el.bind("dragstart", function(e) {
+                    var elPos = $(el).offset();
+
+                    pos.clickTop = e.pageY - elPos.top;
+                    pos.clickLeft = e.pageX - elPos.left;
+
+                    e.dataTransfer.setData('dargPos', angular.toJson(pos));
+
                     $rootScope.$emit("LVL-DRAG-START", el);
                 });
 
                 el.bind("dragend", function(e) {
 
-                    //TODO 莫名问题，待修复
-                    pos.top = e.pageY - $(el).height();
-                    pos.left = e.pageX;
-
-
-                    $rootScope.$emit("LVL-DRAG-END", pos);
+                    $rootScope.$emit("LVL-DRAG-END");
                 });
             };
         }
@@ -46,6 +50,14 @@ define(['admin_app', 'angular', 'jquery'], function(admin_app, angular, $) {
 
                 el.bind("drop", function(e) {
 
+                    var dargPos = e.dataTransfer.getData('dargPos');
+                    dargPos = angular.fromJson(dargPos);
+
+                    dargPos.top = e.pageY;
+                    dargPos.left = e.pageX;
+
+
+
                     if (e.preventDefault) {
                         e.preventDefault(); // Necessary. Allows us to drop.
                     }
@@ -54,11 +66,9 @@ define(['admin_app', 'angular', 'jquery'], function(admin_app, angular, $) {
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
 
-                    setTimeout(function() {
 
-                        scope.dropped(scope.dargEl,el);
-
-                    }, 10);
+                    scope.dargPos = dargPos;
+                    scope.dropped(scope.dargEl,el);
 
 
                 });
@@ -67,9 +77,7 @@ define(['admin_app', 'angular', 'jquery'], function(admin_app, angular, $) {
                     scope.dargEl = obj;
                 });
 
-                $rootScope.$on("LVL-DRAG-END", function(e, pos) {
-                    scope.dargPos = pos;
-                });
+                $rootScope.$on("LVL-DRAG-END", function(e, pos) {});
 
             };
         }

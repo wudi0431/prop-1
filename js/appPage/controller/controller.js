@@ -30,8 +30,8 @@ define(['admin_app', 'angular'], function(admin_app, angular) {
             $scope.dropped = function(dragEl,dropEl) {
 
                 $(dragEl).offset({
-                    top: $scope.dargPos.top,
-                    left: $scope.dargPos.left
+                    top: $scope.dargPos.top - $scope.dargPos.clickTop,
+                    left: $scope.dargPos.left - $scope.dargPos.clickLeft
                 });
 
                 $scope.pageSelected = angular.element(dropEl).html();
